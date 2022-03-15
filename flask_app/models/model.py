@@ -48,6 +48,7 @@ class Classname:
         return connectToMySQL(db).query_db(query, data)
     
     # delete
+    @classmethod
     def delete(cls, data):
         query = "DELETE FROM table_name WHERE id = %(id)s;"
         return connectToMySQL(db).query_db(query, data)
