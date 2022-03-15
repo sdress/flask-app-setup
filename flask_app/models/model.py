@@ -49,13 +49,18 @@ class Classname:
     
     # delete
     def delete(cls, data):
-        query = "DELETE * FROM table_name WHERE id = %(id)s;"
+        query = "DELETE FROM table_name WHERE id = %(id)s;"
         return connectToMySQL(db).query_db(query, data)
     
     #basic validation form
     @staticmethod
     def validate_survey(data):
         is_valid = True # we assume this is true
+        query = "SELECT * FROM table_name WHERE id = %(id)s"
+        results = connectToMySQL(db).query_db(query, data)
+        if len(results) >= 1:
+            flash("ID already exists")
+            is_valid = False
         if len(data['name']) < 3:
             flash("Name is a required field.")
             is_valid = False
