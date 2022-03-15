@@ -1,7 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 # if many to many or one to many relationship, may need to import other model
-# from flask_app.models import model_name
+from flask_app.models import model_name
 
 # insert name of schema
 db = 'name_of_schema'
