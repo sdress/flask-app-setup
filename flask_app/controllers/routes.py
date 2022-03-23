@@ -9,17 +9,23 @@ bcrypt = Bcrypt(app)
 def show_home_page():
     return render_template('index.html')
 
-@app.route('/process')
-def process_form():
+@app.route('/create-user', methods=['POST'])
+def create_user():
+    if not User.validate(request.form):
+        return redirect('/')
     data = {
-        'key': request.form('value')
+        'key': request.form['value'],
     }
-    Class.create(data)
-    return redirect('/')
+    user_id = User.create(data)
+    session['user_id'] = user_id
+    return redirect('/wall')
 
-@app.route('/some-page/<int:id>')
-def show_something_else(id):
+@app.route('/dashboard')
+def show_dashboard():
+    if 'user_id' not in session:
+        flash('You must be logged in to view')
+        return redirect('/logout')
     data = {
-        'id': id
+        'id': session['user_id']
     }
-    return render_template('something.html', data)
+    return render_template('wall.html', user=User.get_from_id(data))
