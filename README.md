@@ -17,3 +17,4 @@ Ready to clone repo!
 After cloning:
 - move flask_app folder and server.py outside of flask-app-setup folder
 - delete remaining flask-app-setup folder
+- run app in terminal using ```python server.py```
